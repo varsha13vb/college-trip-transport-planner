@@ -1,11 +1,9 @@
+
 # College Trip Transport Planner
 
 ## Project Description
 
-A Python-based application that helps college
-trip organizers manage passengers, group them
-by pickup points, allocate them to buses within
-seating limits, and generate passenger lists.
+A Python-based application that helps college trip organizers manage passengers, group them by pickup points, allocate them to buses within seating limits, and generate bus-wise passenger lists.
 
 ## Core Operations
 
@@ -25,11 +23,13 @@ seating limits, and generate passenger lists.
 2. Open the project folder in VS Code.
 3. Run:
 
-   python main.py
+```bash
+python main.py
+```
 
 ## Team Members
 
-- Member 1
-- Member 2
-- Member 3
-- Member 4
+- Varsha
+- Baale
+- Shetty
+- Tanisha
