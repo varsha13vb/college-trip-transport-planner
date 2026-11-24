@@ -1,5 +1,10 @@
+
 def add_bus(buses):
     bus_no = input("Enter Bus Number: ")
+
+    if not bus_no:
+        print("Bus number is required!")
+        return
 
     for bus in buses:
         if bus["bus_no"] == bus_no:
@@ -28,6 +33,8 @@ def view_buses(buses):
     if not buses:
         print("No buses registered.")
         return
+
+    print("\n===== BUS DETAILS =====")
 
     for bus in buses:
         print(

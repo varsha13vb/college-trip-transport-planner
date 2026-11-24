@@ -1,3 +1,4 @@
+
 def group_passengers(passengers):
     groups = {}
 
@@ -13,28 +14,100 @@ def group_passengers(passengers):
 
 
 def allocate_buses(passengers, buses):
+
+    if not passengers:
+        print("No passengers available for allocation.")
+        return {}
+
+    if not buses:
+        print("No buses available!")
+        return {}
+
     allocations = {bus["bus_no"]: [] for bus in buses}
 
     groups = group_passengers(passengers)
 
-    bus_index = 0
+    # Sort pickup groups from largest to smallest
+    sorted_groups = sorted(
+        groups.items(),
+        key=lambda item: len(item[1]),
+        reverse=True
+    )
 
-    for pickup, group in groups.items():
+    unallocated_groups = []
 
-        for passenger in group:
+    for pickup, group in sorted_groups:
 
-            while bus_index < len(buses):
+        group_size = len(group)
+        assigned = False
 
-                bus = buses[bus_index]
-                bus_no = bus["bus_no"]
+        # Find a bus with enough seats for the entire group
+        for bus in buses:
 
-                if len(allocations[bus_no]) < bus["capacity"]:
-                    allocations[bus_no].append(passenger)
-                    break
+            bus_no = bus["bus_no"]
+            available_seats = bus["capacity"] - len(allocations[bus_no])
 
-                bus_index += 1
+            if available_seats >= group_size:
 
-            else:
-                print("Not enough seats for:", passenger["name"])
+                allocations[bus_no].extend(group)
+                assigned = True
+
+                print(
+                    pickup,
+                    "-",
+                    group_size,
+                    "passengers allocated to",
+                    bus_no
+                )
+
+                break
+
+        if not assigned:
+            unallocated_groups.append((pickup, group))
+
+    # Display allocation summary
+    print("\n===== ALLOCATION SUMMARY =====")
+
+    allocated_count = sum(
+        len(passenger_list)
+        for passenger_list in allocations.values()
+    )
+
+    unallocated_count = sum(
+        len(group)
+        for pickup, group in unallocated_groups
+    )
+
+    print("Total Passengers:", len(passengers))
+    print("Allocated Passengers:", allocated_count)
+    print("Unallocated Passengers:", unallocated_count)
+
+    if unallocated_groups:
+
+        print("\n===== GROUPS NOT ALLOCATED =====")
+
+        for pickup, group in unallocated_groups:
+            print(
+                pickup,
+                "-",
+                len(group),
+                "passengers could not be allocated together"
+            )
+
+    else:
+        print("\nAll pickup groups allocated successfully!")
+
+    # Display bus-wise seat availability
+    print("\n===== BUS CAPACITY DETAILS =====")
+
+    for bus in buses:
+
+        bus_no = bus["bus_no"]
+        occupied = len(allocations[bus_no])
+        available = bus["capacity"] - occupied
+
+        print("\nBus:", bus_no)
+        print("Occupied Seats:", occupied)
+        print("Available Seats:", available)
 
     return allocations

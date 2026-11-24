@@ -1,3 +1,4 @@
+
 def generate_passenger_lists(allocations, buses):
 
     for bus in buses:
@@ -14,10 +15,10 @@ def generate_passenger_lists(allocations, buses):
 
         for i, passenger in enumerate(passengers, start=1):
             print(
-                i,
-                passenger["name"],
-                "-",
-                passenger["pickup"]
+                "Seat:", i,
+                "| SRN:", passenger["id"],
+                "| Name:", passenger["name"],
+                "| Pickup:", passenger["pickup"]
             )
 
         occupied = len(passengers)

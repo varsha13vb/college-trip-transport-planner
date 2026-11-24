@@ -1,3 +1,4 @@
+
 def add_passenger(passengers):
     student_id = input("Enter Student ID: ")
     name = input("Enter Student Name: ")
@@ -27,5 +28,11 @@ def view_passengers(passengers):
         print("No passengers registered.")
         return
 
+    print("\n===== PASSENGER DETAILS =====")
+
     for p in passengers:
-        print(p["id"], p["name"], p["pickup"])
+        print(
+            "SRN:", p["id"],
+            "| Name:", p["name"],
+            "| Pickup:", p["pickup"]
+        )
